@@ -1,0 +1,15 @@
+.platform-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.platform-main {
+  flex: 1;
+  margin-left: 260px;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.platform-main > * {
+  min-height: 100%;
+}

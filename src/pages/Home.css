@@ -1,0 +1,441 @@
+/* Hero with background image + overlay */
+.hero {
+  position: relative;
+  min-height: 72vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1600&q=80');
+  background-size: cover;
+  background-position: center;
+  filter: blur(3px);
+  transform: scale(1.02);
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  padding: var(--space-xl) var(--space-lg);
+}
+
+/* Wider content, less side margin on landing */
+.container-wide {
+  max-width: 1400px;
+  padding-left: var(--space-lg);
+  padding-right: var(--space-lg);
+}
+
+.container-narrow {
+  max-width: 640px;
+}
+
+.hero-headline {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0 0 var(--space-lg);
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.hero-subtext {
+  font-size: 1.125rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0 0 var(--space-xl);
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-lg);
+  flex-wrap: wrap;
+}
+
+.hero-link-secondary {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+.hero-link-secondary:hover {
+  color: white;
+  text-decoration: none;
+}
+
+/* Section tightening */
+.section {
+  padding: var(--space-2xl) 0;
+}
+.section-tight {
+  padding: var(--space-xl) 0;
+}
+
+.section-title {
+  font-size: 1.375rem;
+  font-weight: 600;
+  margin: 0 0 var(--space-lg);
+  text-align: center;
+}
+
+.container-narrow {
+  max-width: 640px;
+}
+
+/* Trusted brands carousel - 2 visible */
+.brands-section .container-wide {
+  margin: 0 auto;
+}
+
+.brands-carousel {
+  margin: 0 auto;
+}
+
+.brands-track {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-lg);
+  margin-bottom: var(--space-md);
+}
+
+.brand-card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-xl);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100px;
+}
+
+.brand-name {
+  font-weight: 600;
+  font-size: 1.125rem;
+  color: var(--color-text);
+}
+
+.brands-dots {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-sm);
+}
+
+.brand-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-border);
+  cursor: pointer;
+  padding: 0;
+}
+.brand-dot.active {
+  background: var(--color-primary);
+  transform: scale(1.2);
+}
+
+/* Testimonials - 2 visible, moved down */
+.testimonial-carousel {
+  margin: 0 auto;
+}
+
+.testimonial-carousel-two .testimonial-track {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-xl);
+  margin-bottom: var(--space-md);
+}
+
+.testimonial-slide {
+  text-align: center;
+  padding: var(--space-md);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.testimonial-quote {
+  font-size: 1.25rem;
+  font-style: italic;
+  color: var(--color-text);
+  margin: 0 0 var(--space-md);
+  line-height: 1.5;
+}
+
+.testimonial-author {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  margin: 0 0 var(--space-xs);
+}
+
+.testimonial-brand {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.testimonial-dots {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+.testimonial-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-border);
+  cursor: pointer;
+  padding: 0;
+}
+.testimonial-dot.active {
+  background: var(--color-primary);
+  transform: scale(1.2);
+}
+
+/* Mission */
+.mission-statement {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--color-text-muted);
+  margin: 0;
+  text-align: center;
+}
+
+/* Services carousel - 2 visible */
+.services-carousel {
+  margin: 0 auto;
+}
+
+.services-track {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.services-track-two {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-lg);
+  box-shadow: none;
+}
+
+.services-track-two .service-card {
+  display: block;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.service-card-image {
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+}
+
+.service-card-content {
+  padding: var(--space-lg);
+}
+
+.service-card-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0 0 var(--space-sm);
+}
+
+.service-card-desc {
+  font-size: 0.9375rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.services-dots {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+.service-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-border);
+  cursor: pointer;
+  padding: 0;
+}
+.service-dot.active {
+  background: var(--color-primary);
+  transform: scale(1.2);
+}
+
+/* How it works */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.step {
+  text-align: center;
+  padding: var(--space-md);
+}
+
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: white;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  margin-bottom: var(--space-sm);
+}
+
+.step-title {
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* FAQ */
+.faq-section {
+  padding: var(--space-2xl) 0;
+}
+
+.faq-list {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--color-bg-card);
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--color-border);
+}
+.faq-item:last-child {
+  border-bottom: none;
+}
+
+.faq-question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) var(--space-lg);
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: left;
+  color: var(--color-text);
+  cursor: pointer;
+  font-family: inherit;
+}
+.faq-question:hover {
+  background: var(--color-bg);
+}
+
+.faq-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-left: var(--space-md);
+  position: relative;
+}
+.faq-icon::before,
+.faq-icon::after {
+  content: '';
+  position: absolute;
+  background: var(--color-text-muted);
+  transition: transform 0.2s;
+}
+.faq-icon::before {
+  width: 10px;
+  height: 2px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.faq-icon::after {
+  width: 2px;
+  height: 10px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.faq-item.open .faq-icon::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease-out;
+}
+.faq-item.open .faq-answer {
+  max-height: 400px;
+}
+
+.faq-answer p {
+  margin: 0;
+  padding: 0 var(--space-lg) var(--space-lg);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 768px) {
+  .hero {
+    min-height: 70vh;
+  }
+
+  .brands-track,
+  .testimonial-carousel-two .testimonial-track,
+  .services-track-two {
+    grid-template-columns: 1fr;
+  }
+
+  .steps {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .faq-item.open .faq-answer {
+    max-height: 300px;
+  }
+}
