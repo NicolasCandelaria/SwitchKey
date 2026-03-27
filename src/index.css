@@ -1,0 +1,217 @@
+/* SwitchKey – Design tokens & base styles (Stripe/Linear/Notion style) */
+:root {
+  /* Colors */
+  --color-bg: #ffffff;
+  --color-bg-card: #ffffff;
+  --color-text: #1a1a1a;
+  --color-text-muted: #6b7280;
+  --color-primary: #4f46e5;
+  --color-primary-hover: #4338ca;
+  --color-border: #e5e7eb;
+  --color-error: #dc2626;
+  --color-focus: #4f46e5;
+
+  /* Layout */
+  --max-width: 1200px;
+  --radius: 10px;
+  --radius-sm: 6px;
+
+  /*
+   * Fluid spacing grids (vw + vh + em — responsive without fixed px steps).
+   * Named by the viewport band where that formula is active (see below).
+   */
+  --1920px-spacing-grid-width: calc(100vw + 75vh + 0.35em);
+  --1400px-spacing-grid-width: calc(80vw + 65vh + 0.15em);
+  --1024px-spacing-grid-width: calc(65vw + 50vh + 0.5em);
+
+  /* Active grid: pick formula by viewport width (only switches which calc() applies). */
+  --spacing-grid-width: var(--1024px-spacing-grid-width);
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  /* Fluid hero spacing derived from the active spacing grid */
+  --space-hero: clamp(48px, calc(var(--spacing-grid-width) * 0.028), 80px);
+
+  /* Typography */
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-sm) var(--space-lg);
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+.btn-primary {
+  background: var(--color-primary);
+  color: white;
+}
+.btn-primary:hover {
+  background: var(--color-primary-hover);
+}
+.btn-secondary {
+  background: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+.btn-secondary:hover {
+  background: var(--color-bg);
+}
+
+/* Forms */
+.form-group {
+  margin-bottom: var(--space-lg);
+}
+.form-group label {
+  display: block;
+  margin-bottom: var(--space-xs);
+  font-weight: 500;
+  color: var(--color-text);
+}
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  font-size: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-card);
+  color: var(--color-text);
+}
+.form-group select {
+  cursor: pointer;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--color-focus);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+.form-group input.error,
+.form-group textarea.error,
+.form-group select.error {
+  border-color: var(--color-error);
+}
+.form-group .error-message {
+  margin-top: var(--space-xs);
+  font-size: 0.875rem;
+  color: var(--color-error);
+}
+
+/* Cards */
+.card {
+  background: var(--color-bg-card);
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border);
+  padding: var(--space-md);
+  max-width: 420px;
+  width: 100%;
+}
+
+/* Container — content width capped; padding scales with the fluid spacing grid */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding-left: clamp(var(--space-sm), calc(var(--spacing-grid-width) * 0.015), var(--space-xl));
+  padding-right: clamp(var(--space-sm), calc(var(--spacing-grid-width) * 0.015), var(--space-xl));
+}
+
+/* Auth layout (centered card) */
+.auth-layout {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(var(--space-sm), calc(var(--spacing-grid-width) * 0.02), var(--space-lg));
+}
+
+/* Touch-friendly minimum sizes on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .btn,
+  .navbar-links a,
+  .sidebar-dropdown-item,
+  button:not(.navbar-toggle):not(.brand-dot):not(.testimonial-dot):not(.service-dot) {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    min-height: 44px;
+    font-size: 16px; /* avoids zoom on focus on iOS */
+  }
+}
+
+/* Spacing grid band: 1024px → 1400px formula */
+@media (min-width: 1024px) {
+  :root {
+    --spacing-grid-width: var(--1400px-spacing-grid-width);
+  }
+}
+
+/* Spacing grid band: 1920px+ formula */
+@media (min-width: 1920px) {
+  :root {
+    --spacing-grid-width: var(--1920px-spacing-grid-width);
+  }
+}
+
+/* Narrow viewports: align auth content to top with fluid top padding */
+@media (max-width: 768px) {
+  .auth-layout {
+    align-items: flex-start;
+    padding-top: clamp(var(--space-lg), calc(var(--spacing-grid-width) * 0.032), var(--space-2xl));
+  }
+
+  .card {
+    max-width: min(420px, 100%);
+    margin-inline: auto;
+    width: 100%;
+    box-sizing: border-box;
+  }
+}

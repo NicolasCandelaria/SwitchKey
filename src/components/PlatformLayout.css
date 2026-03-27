@@ -1,0 +1,30 @@
+/* Wraps Sidebar + main on all dashboard pages (Dashboard, Project, Create Project, etc.) */
+.platform-layout {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  min-height: 100vh;
+  height: 100vh;
+  overflow: visible;
+}
+
+.platform-main {
+  flex: 1;
+  min-width: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.platform-content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+  .platform-content {
+    padding-bottom: calc(72px + env(safe-area-inset-bottom, 0));
+  }
+}

@@ -1,0 +1,527 @@
+.dashboard {
+  padding: var(--space-xl);
+  max-width: 80vw;
+  margin: 0 auto;
+}
+
+.dashboard-header {
+  margin-bottom: var(--space-xl);
+}
+
+.dashboard-welcome {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.dashboard-divider {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: var(--space-xl) 0;
+}
+
+.dashboard-section.dashboard-recent {
+  margin-bottom: var(--space-xl);
+}
+
+.dashboard-section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 var(--space-md);
+}
+
+.dashboard-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.dashboard-table-wrap {
+  overflow-x: auto;
+  padding: 0;
+  max-width: none;
+}
+
+.dashboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+.dashboard-table-body .dashboard-table-row {
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.dashboard-table-body .dashboard-table-row:hover {
+  background-color: rgba(79, 70, 229, 0.04);
+}
+
+.dashboard-table th,
+.dashboard-table td {
+  padding: var(--space-md) var(--space-lg);
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.dashboard-table td:last-child {
+  text-align: center;
+}
+
+.dashboard-table td:first-child {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.dashboard-table td:first-child .dashboard-table-link {
+  color: inherit;
+}
+
+.dashboard-project-meta {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-top: 4px;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.dashboard-project-avatars {
+  display: flex;
+  align-items: center;
+}
+
+.dashboard-project-avatar {
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.625rem;
+  font-weight: 500;
+  color: var(--color-text);
+  border: 2px solid var(--color-bg-card);
+  margin-right: -6px;
+}
+
+.dashboard-project-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--color-text-muted);
+  opacity: 0.5;
+}
+
+.dashboard-project-updated {
+  color: var(--color-text-muted);
+}
+
+.dashboard-table-cta {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--space-sm);
+  border: none;
+  background: none;
+  color: var(--color-primary);
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: color 0.15s ease;
+  position: relative;
+}
+
+.dashboard-table-cta > span:first-child {
+  display: inline-block;
+  transition: transform 0.15s ease;
+}
+
+.dashboard-table-cta:hover > span:first-child {
+  transform: translateX(-4px);
+}
+
+.dashboard-table-cta-arrow {
+  position: absolute;
+  left: 100%;
+  margin-left: 4px;
+  opacity: 0;
+  transform: translateX(0);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.dashboard-table-cta:hover {
+  color: var(--color-primary-hover);
+}
+
+.dashboard-table-cta:hover .dashboard-table-cta-arrow {
+  opacity: 1;
+  transform: translateX(3px);
+}
+
+/* Row hover activates same CTA state as hovering the button */
+.dashboard-table-body .dashboard-table-row:hover .dashboard-table-cta {
+  color: var(--color-primary-hover);
+}
+
+.dashboard-table-body .dashboard-table-row:hover .dashboard-table-cta > span:first-child {
+  transform: translateX(-4px);
+}
+
+.dashboard-table-body .dashboard-table-row:hover .dashboard-table-cta-arrow {
+  opacity: 1;
+  transform: translateX(3px);
+}
+
+.dashboard-table th {
+  font-weight: 600;
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.dashboard-table-link {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+.dashboard-table-link:hover {
+  text-decoration: underline;
+}
+
+.dashboard-baseline-desc {
+  max-width: 280px;
+  font-size: 0.9375rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+.dashboard-baseline-cats {
+  font-size: 0.9375rem;
+  color: var(--color-text);
+}
+
+.dashboard-baseline-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.dashboard-baseline-tag {
+  font-size: 0.75rem;
+  padding: 2px 6px;
+  background: var(--color-bg);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+}
+
+.dashboard-recent-empty {
+  margin: 0;
+  padding: var(--space-xl);
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+}
+
+.dashboard-empty {
+  padding: var(--space-2xl);
+  text-align: center;
+}
+
+.dashboard-empty-text {
+  margin: 0 0 var(--space-lg);
+  color: var(--color-text-muted);
+}
+
+.dashboard-taskboard {
+  margin-bottom: var(--space-xl);
+}
+
+.dashboard-cta-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-lg);
+}
+
+.dashboard-cta-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding: var(--space-lg) var(--space-xl);
+  flex: 1;
+  min-width: 220px;
+  max-width: 340px;
+}
+
+.dashboard-cta-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.dashboard-cta-card-desc {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.dashboard-cta-card-linkedin-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.dashboard-cta-card-linkedin-icon {
+  display: inline-flex;
+  color: #0a66c2;
+}
+
+.dashboard-cta-card-linkedin-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.dashboard-cta-card .btn-sm {
+  padding: var(--space-sm) var(--space-md);
+  font-size: 0.875rem;
+}
+
+.dashboard-cta-card .btn:disabled {
+  opacity: 0.8;
+  cursor: default;
+}
+
+.dashboard-cta-card-progress {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  width: 100%;
+}
+
+.dashboard-cta-card-progress .dashboard-profile-progress-bar {
+  flex: 1;
+  min-width: 64px;
+  height: 8px;
+}
+
+.dashboard-profile-progress-bar {
+  height: 8px;
+  background: var(--color-border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.dashboard-profile-progress-fill {
+  height: 100%;
+  background: var(--color-primary);
+  border-radius: 999px;
+  transition: width 0.25s ease;
+}
+
+.dashboard-profile-progress-label {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+.dashboard-column-title {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-md);
+}
+
+.dashboard-kanban {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+}
+
+@media (max-width: 768px) {
+  .dashboard-cta-card {
+    max-width: none;
+  }
+
+  .dashboard-kanban {
+    grid-template-columns: 1fr;
+  }
+}
+
+.dashboard-column {
+  min-width: 0;
+}
+
+.dashboard-task-card {
+  display: block;
+  width: 100%;
+  padding: var(--space-md);
+  margin-bottom: var(--space-sm);
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.dashboard-task-card:hover {
+  background-color: rgba(79, 70, 229, 0.06);
+  border-color: rgba(79, 70, 229, 0.2);
+}
+
+.dashboard-task-priority {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: var(--space-sm);
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.dashboard-task-priority[data-priority="high"] {
+  background: rgba(220, 38, 38, 0.12);
+  color: #b91c1c;
+}
+
+.dashboard-task-priority[data-priority="medium"] {
+  background: rgba(245, 158, 11, 0.2);
+  color: #b45309;
+}
+
+.dashboard-task-priority[data-priority="low"] {
+  background: var(--color-border);
+  color: var(--color-text-muted);
+}
+
+.dashboard-task-title {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  margin-bottom: var(--space-sm);
+}
+
+.dashboard-task-tags {
+  display: flex;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+}
+
+.dashboard-task-tag {
+  font-size: 0.75rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--color-bg);
+  color: var(--color-text-muted);
+}
+
+.dashboard-task-tag.project {
+  background: rgba(79, 70, 229, 0.1);
+  color: var(--color-primary);
+}
+
+.dashboard-task-tag.role {
+  background: var(--color-border);
+}
+
+/* ---------- Mobile responsive ---------- */
+@media (max-width: 768px) {
+  .dashboard {
+    padding: var(--space-md);
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .dashboard-header {
+    margin-bottom: var(--space-lg);
+  }
+
+  .dashboard-welcome {
+    font-size: 1.25rem;
+    line-height: 1.35;
+  }
+
+  .dashboard-section.dashboard-recent {
+    margin-bottom: var(--space-lg);
+  }
+
+  .dashboard-section-title {
+    margin-bottom: var(--space-sm);
+  }
+
+  .dashboard-taskboard {
+    margin-bottom: var(--space-lg);
+  }
+
+  /* Cards full width on small screens (override global .card max-width) */
+  .dashboard .card,
+  .dashboard-table-wrap.card {
+    max-width: none;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .dashboard-table-wrap {
+    -webkit-overflow-scrolling: touch;
+    margin-left: calc(-1 * var(--space-sm));
+    margin-right: calc(-1 * var(--space-sm));
+    padding-left: var(--space-sm);
+    padding-right: var(--space-sm);
+  }
+
+  .dashboard-table th,
+  .dashboard-table td {
+    padding: var(--space-sm) var(--space-md);
+    font-size: 0.875rem;
+    vertical-align: top;
+  }
+
+  .dashboard-table td:last-child {
+    white-space: nowrap;
+  }
+
+  .dashboard-project-meta {
+    gap: var(--space-xs);
+  }
+
+  .dashboard-empty {
+    padding: var(--space-xl) var(--space-md);
+  }
+
+  .dashboard-kanban {
+    gap: var(--space-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard {
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .dashboard-welcome {
+    font-size: 1.125rem;
+  }
+
+  .dashboard-table-cta {
+    font-size: 0.8125rem;
+    padding: 0 var(--space-xs);
+  }
+
+  /* Optional: show CTA arrow on touch (no hover) so affordance is visible */
+  @media (hover: none) {
+    .dashboard-table-cta-arrow {
+      opacity: 1;
+      transform: translateX(2px);
+    }
+
+    .dashboard-table-cta > span:first-child {
+      transform: translateX(-2px);
+    }
+  }
+}

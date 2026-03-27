@@ -1,0 +1,122 @@
+.navbar {
+  background: var(--color-bg-card);
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--space-md) 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.navbar-logo {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-text);
+  text-decoration: none;
+}
+.navbar-logo:hover {
+  text-decoration: none;
+  color: var(--color-primary);
+}
+
+.navbar-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: var(--space-sm);
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+}
+.navbar-toggle-bar {
+  width: 22px;
+  height: 2px;
+  background: var(--color-text);
+  border-radius: 1px;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+/* Even spacing for text links only; .btn keeps its own padding */
+.navbar-links > a:not(.btn) {
+  margin: 0;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-sm);
+}
+.navbar-links a {
+  color: var(--color-text);
+  font-weight: 500;
+}
+.navbar-links a:hover {
+  text-decoration: none;
+  color: var(--color-primary);
+}
+.navbar-links .btn {
+  text-decoration: none;
+}
+.navbar-links .btn:hover {
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: var(--space-sm) 0;
+  }
+
+  .navbar-toggle {
+    display: flex;
+    padding: var(--space-md);
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .navbar-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background: var(--color-bg-card);
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--space-lg);
+    gap: var(--space-md);
+    align-items: stretch;
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.2s, opacity 0.2s;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .navbar-links-open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .navbar-links > a:not(.btn) {
+    padding: var(--space-md) var(--space-lg);
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .navbar-links .btn {
+    width: 100%;
+    justify-content: center;
+    min-height: 44px;
+  }
+}

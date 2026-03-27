@@ -1,0 +1,652 @@
+/* GitHub-style repository layout (existing tokens + dashboard table) */
+.project-workspace.project-repo {
+  max-width: none;
+  width: 100%;
+}
+
+.project-workspace .card,
+.project-workspace .dashboard-task-card {
+  max-width: none;
+}
+
+.repo-page-header {
+  margin-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 0;
+}
+
+.repo-header-top {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.repo-header-title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.repo-title {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--color-text);
+}
+
+.repo-title-icon {
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+.repo-visibility-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2em 0.65em;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  color: var(--color-text-muted);
+  text-transform: capitalize;
+}
+
+.repo-visibility-badge--draft {
+  border-color: rgba(79, 70, 229, 0.35);
+  color: var(--color-primary);
+  background: rgba(79, 70, 229, 0.06);
+}
+
+.repo-description {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: var(--color-text-muted);
+  max-width: 720px;
+}
+
+.repo-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: var(--space-md);
+}
+
+.repo-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
+  margin-bottom: -1px;
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  cursor: pointer;
+}
+
+.repo-tab:hover {
+  color: var(--color-text);
+}
+
+.repo-tab[aria-selected="true"] {
+  color: var(--color-text);
+  border-bottom-color: var(--color-primary);
+  font-weight: 600;
+}
+
+.repo-tab-count {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.1em 0.45em;
+  border-radius: 999px;
+  background: var(--color-border);
+  color: var(--color-text);
+}
+
+.repo-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+.repo-main {
+  min-width: 0;
+}
+
+.repo-sidebar {
+  min-width: 0;
+}
+
+.repo-panel-title {
+  margin-bottom: var(--space-xs);
+}
+
+.repo-panel-sub {
+  margin: 0 0 var(--space-lg);
+  font-size: 0.9375rem;
+  color: var(--color-text-muted);
+}
+
+.repo-roles-split {
+  display: grid;
+  grid-template-columns: minmax(200px, 280px) minmax(0, 1fr);
+  gap: var(--space-lg);
+  align-items: start;
+}
+
+.repo-roles-list {
+  padding: 0;
+  overflow: hidden;
+}
+
+.repo-role-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  width: 100%;
+  padding: var(--space-md);
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--color-border);
+  cursor: pointer;
+}
+
+.repo-role-row:last-child {
+  border-bottom: none;
+}
+
+.repo-role-row:hover {
+  background: rgba(79, 70, 229, 0.04);
+}
+
+.repo-role-row--active {
+  background: rgba(79, 70, 229, 0.08);
+  box-shadow: inset 3px 0 0 var(--color-primary);
+}
+
+.repo-role-name {
+  flex: 1;
+  font-weight: 500;
+  font-size: 0.9375rem;
+}
+
+.repo-role-status {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.repo-spec-card {
+  padding: var(--space-lg);
+}
+
+.workspace-board-spec-context {
+  margin: 0 0 var(--space-md);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.workspace-board-empty {
+  margin: 0;
+  font-size: 0.9375rem;
+}
+
+.repo-requests-table-wrap {
+  padding: 0;
+  max-width: none;
+}
+
+.repo-requests-table td:last-child {
+  text-align: left;
+}
+
+.repo-about-card {
+  padding: var(--space-md);
+}
+
+.repo-about-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.repo-about-desc {
+  margin: 0 0 var(--space-md);
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.repo-about-dl {
+  margin: 0 0 var(--space-md);
+  font-size: 0.8125rem;
+}
+
+.repo-about-dl div {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-xs) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.repo-about-dl dt {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.repo-about-dl dd {
+  margin: 0;
+  text-align: right;
+  font-weight: 500;
+}
+
+.repo-about-tags-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-sm);
+}
+
+.repo-about-actions {
+  margin-top: var(--space-lg);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.repo-about-actions .btn {
+  width: 100%;
+  justify-content: center;
+}
+
+.workspace-header {
+  margin-bottom: var(--space-xl);
+}
+
+.workspace-header-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  flex-wrap: wrap;
+}
+
+.workspace-delete-btn {
+  flex-shrink: 0;
+  background: var(--color-error, #dc2626) !important;
+  color: white !important;
+  border-color: var(--color-error, #dc2626) !important;
+}
+
+.workspace-delete-btn:hover {
+  background: var(--color-error-hover, #b91c1c) !important;
+  border-color: var(--color-error-hover, #b91c1c) !important;
+  color: white !important;
+}
+
+.workspace-main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+/* Legacy: two-column grid unused when board layout is active */
+
+.workspace-title {
+  font-size: 1.75rem;
+  margin: 0 0 var(--space-xs);
+}
+
+.workspace-meta {
+  font-size: 0.9375rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.workspace-section-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0 0 var(--space-lg);
+}
+
+.workspace-baseline {
+  padding: var(--space-xl);
+}
+
+.workspace-baseline-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.workspace-baseline-row .workspace-baseline-label,
+.workspace-baseline-item .workspace-baseline-label {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-xs);
+}
+
+.workspace-baseline-value {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--color-text);
+}
+
+.workspace-baseline-row .workspace-baseline-value {
+  white-space: pre-wrap;
+}
+
+.workspace-baseline-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+}
+
+.workspace-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.workspace-tag {
+  display: inline-block;
+  padding: var(--space-xs) var(--space-sm);
+  font-size: 0.8125rem;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+}
+
+.workspace-pathways {
+  padding: var(--space-xl);
+}
+
+.workspace-pathways-desc {
+  font-size: 0.9375rem;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-lg);
+  line-height: 1.5;
+}
+
+.workspace-pathway-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.workspace-pathway-card {
+  padding: var(--space-md) 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.workspace-pathway-list > li:last-child.workspace-pathway-card {
+  border-bottom: none;
+}
+
+.workspace-pathway-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.workspace-pathway-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.workspace-pathway-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--color-text);
+}
+
+.workspace-pathway-status-badge {
+  font-size: 0.8125rem;
+  padding: var(--space-xs) var(--space-sm);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+}
+
+.workspace-pathway-empty {
+  padding: var(--space-lg);
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+}
+
+.workspace-role-card-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.workspace-role-card-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+  border-radius: var(--radius-sm);
+}
+
+.workspace-role-alignment {
+  margin-top: var(--space-xl);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--color-border);
+}
+
+.workspace-role-alignment-title {
+  margin: 0 0 var(--space-lg);
+  font-size: 1.125rem;
+  font-weight: 650;
+}
+
+.workspace-role-alignment-invite {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+}
+
+.workspace-role-form-error {
+  margin: 0 0 var(--space-lg);
+  color: var(--color-error);
+  font-size: 0.95rem;
+}
+
+.workspace-role-alignment-actions {
+  margin-top: var(--space-lg);
+}
+
+.workspace-role-request-sent {
+  margin-top: var(--space-lg);
+  padding: var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-card);
+}
+
+.workspace-role-request-sent-title {
+  margin: 0 0 var(--space-xs);
+  font-weight: 650;
+}
+
+.workspace-role-requests {
+  margin-top: var(--space-lg);
+}
+
+.workspace-role-requests-title {
+  margin: 0 0 var(--space-md);
+  font-size: 1rem;
+  font-weight: 650;
+}
+
+.workspace-role-requests-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.workspace-role-request-item {
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-card);
+  border-radius: var(--radius-sm);
+  padding: var(--space-md);
+}
+
+.workspace-role-request-main {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.workspace-role-request-label {
+  font-weight: 600;
+}
+
+.workspace-role-request-meta {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+.workspace-role-request-sub {
+  margin-top: var(--space-xs);
+  color: var(--color-text);
+  font-size: 0.9375rem;
+}
+
+.project-workspace {
+  padding: var(--space-lg);
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .project-workspace {
+    padding: var(--space-md);
+  }
+
+  .workspace-header-top {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-md);
+  }
+
+  .workspace-delete-btn {
+    width: 100%;
+    min-height: 44px;
+  }
+
+  .workspace-title {
+    font-size: 1.5rem;
+  }
+
+  .workspace-main {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  .repo-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .repo-sidebar {
+    order: 2;
+  }
+
+  .repo-main {
+    order: 1;
+  }
+
+  .repo-roles-split {
+    grid-template-columns: 1fr;
+  }
+
+  .workspace-baseline,
+  .workspace-pathways {
+    padding: var(--space-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .project-workspace {
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .workspace-title {
+    font-size: 1.25rem;
+  }
+
+  .workspace-section-title {
+    font-size: 1rem;
+  }
+
+  .workspace-baseline-row .workspace-baseline-value,
+  .workspace-baseline-item .workspace-baseline-value {
+    font-size: 0.9375rem;
+  }
+
+  .workspace-pathway-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .workspace-role-alignment-invite {
+    grid-template-columns: 1fr;
+  }
+}
+
+.workspace-not-found .dashboard-empty-text {
+  margin-bottom: var(--space-lg);
+}
