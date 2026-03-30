@@ -499,8 +499,11 @@ export default function ProjectWorkspace() {
         </div>
 
         <aside className="repo-sidebar" aria-label="About">
+          <div className="repo-about-toolbar">
+            <h2 className="dashboard-section-title repo-panel-title repo-about-toolbar-title">About</h2>
+            <p className="repo-about-toolbar-project">{project.projectName}</p>
+          </div>
           <div className="card repo-about-card">
-            <h3 className="repo-about-title">About</h3>
             <p className="repo-about-desc">
               {project.productDescription
                 ? `${String(project.productDescription).slice(0, 160)}${String(project.productDescription).length > 160 ? '…' : ''}`
