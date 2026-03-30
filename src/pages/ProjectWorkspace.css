@@ -126,22 +126,13 @@
   min-width: 0;
 }
 
-/* Align with main column .repo-roles-toolbar / .repo-panel-title block */
+/* Align spacing with main column toolbar before cards */
 .repo-about-toolbar {
+  margin-bottom: var(--space-lg);
+}
+
+.repo-about-toolbar .repo-panel-title.repo-about-toolbar-title {
   margin-bottom: 0;
-}
-
-.repo-about-toolbar-title {
-  margin-bottom: var(--space-xs);
-}
-
-.repo-about-toolbar-project {
-  margin: 0 0 var(--space-lg);
-  font-size: 0.9375rem;
-  color: var(--color-text);
-  font-weight: 600;
-  line-height: 1.35;
-  word-break: break-word;
 }
 
 .repo-panel-title {

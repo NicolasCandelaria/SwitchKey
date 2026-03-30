@@ -501,7 +501,6 @@ export default function ProjectWorkspace() {
         <aside className="repo-sidebar" aria-label="About">
           <div className="repo-about-toolbar">
             <h2 className="dashboard-section-title repo-panel-title repo-about-toolbar-title">About</h2>
-            <p className="repo-about-toolbar-project">{project.projectName}</p>
           </div>
           <div className="card repo-about-card">
             <p className="repo-about-desc">
