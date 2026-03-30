@@ -9,6 +9,7 @@ import fs from 'fs';
 import { fileURLToPath } from 'url';
 import express from 'express';
 import cors from 'cors';
+import { sendRoleInvitationMail } from './roleInvitationMail.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -122,6 +123,45 @@ app.delete('/api/projects/:slug', (req, res) => {
   res.status(204).send();
 });
 
+// ----- Role invitation email (Nodemailer + VRF link) -----
+app.post('/api/invitations/send-role-request', async (req, res) => {
+  const body = req.body || {};
+  const toEmail = String(body.toEmail || '').trim();
+  const inviteeName = String(body.inviteeName || '').trim();
+  const projectName = String(body.projectName || '').trim();
+  const canonicalProductDescription = String(body.canonicalProductDescription ?? '');
+  const roleLabel = String(body.roleLabel || '').trim();
+  const dueDate = String(body.dueDate || '').trim();
+  const requestId = String(body.requestId || '').trim();
+
+  if (!toEmail || !inviteeName || !projectName || !roleLabel || !dueDate || !requestId) {
+    return res.status(400).json({ error: 'Missing required fields' });
+  }
+
+  try {
+    const result = await sendRoleInvitationMail({
+      toEmail,
+      inviteeName,
+      projectName,
+      canonicalProductDescription,
+      roleLabel,
+      dueDate,
+      requestId,
+    });
+    res.json({
+      ok: true,
+      vrfToken: result.vrfToken,
+      vrfUrl: result.vrfUrl,
+      emailSent: result.emailSent,
+      simulated: result.simulated,
+      smtpDeliveryFailed: result.smtpDeliveryFailed ?? false,
+    });
+  } catch (err) {
+    console.error('Invitation handler error:', err.message);
+    res.status(500).json({ error: err.message || 'Invitation request failed' });
+  }
+});
+
 // Non-API routes: avoid 404 when opening http://localhost:3001 in browser
 const distPath = path.join(__dirname, '..', 'dist');
 const distExists = fs.existsSync(distPath);
@@ -141,7 +181,7 @@ if (distExists) {
     <body>
       <h1>SwitchKey API</h1>
       <p>API server is running. Use the app at <a href="http://localhost:5173">http://localhost:5173</a> (run <code>npm run dev</code> in another terminal).</p>
-      <p>Endpoints: <code>GET/POST /api/projects</code>, <code>GET/DELETE /api/projects/:slug</code></p>
+      <p>Endpoints: <code>GET/POST /api/projects</code>, <code>GET/DELETE /api/projects/:slug</code>, <code>POST /api/invitations/send-role-request</code></p>
     </body></html>
   `);
   });

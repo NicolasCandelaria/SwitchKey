@@ -36,6 +36,19 @@ npm run server
 
 Keep `npm run dev` running in the first terminal. The dev server proxies `/api` to the backend (port 3001).
 
+**Role invitation emails** (project workspace → “Convert to request & send”) use **Nodemailer** with SMTP. If SMTP is not configured, the API **simulates** the send and logs the message to the terminal.
+
+#### Send real invitation emails
+
+1. Copy `cp .env.example .env` at the project root (same folder as `package.json`).
+2. Fill **`SMTP_HOST`**, **`SMTP_USER`**, **`SMTP_PASS`**, and optionally **`SMTP_FROM`** (see commented examples in `.env.example` for **Gmail** and **SendGrid**).
+3. **Gmail:** create an [App Password](https://support.google.com/accounts/answer/185833) and use `smtp.gmail.com`, port **587**, user = your Gmail address.
+4. **SendGrid:** use `smtp.sendgrid.net`, user **`apikey`**, password = your SendGrid API key; **`SMTP_FROM`** must be a verified sender.
+5. Run **`npm run server`** from the project root (restart it after editing `.env`). Keep **`npm run dev`** running in another terminal.
+6. Set **`PUBLIC_APP_URL`** to a URL invitees can open (your deployed site, or a tunnel like ngrok). `http://localhost:5173` only works for you, not for external invitees.
+
+If SMTP is set but delivery fails, check the API terminal; the app still saves the request and shows the VRF link. Set **`SMTP_DEBUG=1`** to log SMTP details.
+
 ## Routes
 
 ### Public
@@ -50,6 +63,7 @@ Keep `npm run dev` running in the first terminal. The dev server proxies `/api` 
 | `/sign-up/password` | Sign up step 3 – create password |
 | `/sign-up/terms` | Terms & Conditions (new users only); Accept → dashboard |
 | `/sign-up/success` | Legacy post-signup (flow now goes via Terms) |
+| `/invite/vrf?token=…` | Public VRF landing page (non-binding notice; token from invitation email) |
 
 ### Platform (requires auth)
 

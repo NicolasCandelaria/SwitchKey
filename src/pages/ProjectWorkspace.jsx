@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useProjects } from '../context/ProjectsContext';
+import { sendRoleInvitationEmail } from '../lib/invitationsApi';
 import { PATHWAY_ITEMS } from './CreateProject/constants';
 import './Dashboard.css';
 import './ProjectWorkspace.css';
@@ -8,7 +9,7 @@ import './ProjectWorkspace.css';
 export default function ProjectWorkspace() {
   const { slug } = useParams();
   const navigate = useNavigate();
-  const { getProjectBySlug, deleteProject, updateProjectStatus, updateProject } = useProjects();
+  const { getProjectBySlug, updateProjectStatus, updateProject } = useProjects();
   const project = slug ? getProjectBySlug(slug) : null;
 
   async function handlePromote() {
@@ -25,10 +26,72 @@ export default function ProjectWorkspace() {
     navigate('/dashboard/projects/trash');
   }
 
-  const pathwayIdToLabel = PATHWAY_ITEMS.reduce((acc, p) => {
-    acc[p.id] = p.label;
-    return acc;
-  }, {});
+  const pathwayIdToLabel = useMemo(
+    () =>
+      PATHWAY_ITEMS.reduce((acc, p) => {
+        acc[p.id] = p.label;
+        return acc;
+      }, {}),
+    []
+  );
+
+  const roleItems = useMemo(() => {
+    if (!project) return [];
+    const ids = Array.isArray(project.selectedPathways) ? project.selectedPathways : [];
+    return ids.map((id) => ({ id, label: pathwayIdToLabel[id] || id }));
+  }, [project, pathwayIdToLabel]);
+
+  const roleSpecAlignments = project?.roleSpecAlignments || {};
+  const roleRequests = Array.isArray(project?.roleRequests) ? project.roleRequests : [];
+
+  const [activeRoleId, setActiveRoleId] = useState(null);
+  const [alignmentSummary, setAlignmentSummary] = useState('');
+  const [alignmentDeliverables, setAlignmentDeliverables] = useState('');
+  const [alignmentSuccessCriteria, setAlignmentSuccessCriteria] = useState('');
+  const [alignmentConstraints, setAlignmentConstraints] = useState('');
+  const [inviteeName, setInviteeName] = useState('');
+  const [inviteeEmail, setInviteeEmail] = useState('');
+  const [requestMessage, setRequestMessage] = useState('');
+  const [dueDate, setDueDate] = useState('');
+  const [formError, setFormError] = useState('');
+  const [requestSent, setRequestSent] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [repoTab, setRepoTab] = useState(/** @type {'roles' | 'requests'} */ ('roles'));
+
+  const activeRole = roleItems.find((r) => r.id === activeRoleId) || null;
+  const existingAlignment = activeRoleId ? roleSpecAlignments[activeRoleId] : null;
+
+  const canonicalDescription = String(project?.productDescription ?? '').trim();
+
+  useEffect(() => {
+    if (!activeRoleId && roleItems.length > 0) setActiveRoleId(roleItems[0].id);
+  }, [activeRoleId, roleItems]);
+
+  useEffect(() => {
+    if (!activeRoleId) return;
+    const stillExists = roleItems.some((r) => r.id === activeRoleId);
+    if (!stillExists) setActiveRoleId(roleItems.length > 0 ? roleItems[0].id : null);
+  }, [activeRoleId, roleItems]);
+
+  useEffect(() => {
+    setRequestSent(null);
+  }, [activeRoleId]);
+
+  useEffect(() => {
+    if (!project) return;
+    setFormError('');
+
+    setAlignmentSummary(existingAlignment?.summary ?? '');
+    setAlignmentDeliverables(existingAlignment?.deliverables ?? '');
+    setAlignmentSuccessCriteria(existingAlignment?.successCriteria ?? '');
+    setAlignmentConstraints(existingAlignment?.constraints ?? '');
+    setInviteeName(existingAlignment?.invitee?.name ?? '');
+    setInviteeEmail(existingAlignment?.invitee?.email ?? '');
+    setRequestMessage(existingAlignment?.message ?? '');
+    setDueDate(
+      typeof existingAlignment?.dueDate === 'string' ? existingAlignment.dueDate : ''
+    );
+  }, [activeRoleId, project, existingAlignment]);
 
   if (!project) {
     return (
@@ -45,52 +108,6 @@ export default function ProjectWorkspace() {
       </div>
     );
   }
-
-  const roleItems = useMemo(() => {
-    const ids = Array.isArray(project.selectedPathways) ? project.selectedPathways : [];
-    return ids.map((id) => ({ id, label: pathwayIdToLabel[id] || id }));
-  }, [project.selectedPathways, pathwayIdToLabel]);
-
-  const roleSpecAlignments = project.roleSpecAlignments || {};
-  const roleRequests = Array.isArray(project.roleRequests) ? project.roleRequests : [];
-
-  const [activeRoleId, setActiveRoleId] = useState(null);
-  useEffect(() => {
-    if (!activeRoleId && roleItems.length > 0) setActiveRoleId(roleItems[0].id);
-  }, [activeRoleId, roleItems]);
-
-  useEffect(() => {
-    if (!activeRoleId) return;
-    const stillExists = roleItems.some((r) => r.id === activeRoleId);
-    if (!stillExists) setActiveRoleId(roleItems.length > 0 ? roleItems[0].id : null);
-  }, [activeRoleId, roleItems]);
-
-  const activeRole = roleItems.find((r) => r.id === activeRoleId) || null;
-  const existingAlignment = activeRoleId ? roleSpecAlignments[activeRoleId] : null;
-
-  const [alignmentSummary, setAlignmentSummary] = useState('');
-  const [alignmentDeliverables, setAlignmentDeliverables] = useState('');
-  const [alignmentSuccessCriteria, setAlignmentSuccessCriteria] = useState('');
-  const [alignmentConstraints, setAlignmentConstraints] = useState('');
-  const [inviteeName, setInviteeName] = useState('');
-  const [inviteeEmail, setInviteeEmail] = useState('');
-  const [requestMessage, setRequestMessage] = useState('');
-  const [formError, setFormError] = useState('');
-  const [requestSent, setRequestSent] = useState(null);
-  const [repoTab, setRepoTab] = useState(/** @type {'roles' | 'requests'} */ ('roles'));
-
-  useEffect(() => {
-    setFormError('');
-    setRequestSent(null);
-
-    setAlignmentSummary(existingAlignment?.summary ?? '');
-    setAlignmentDeliverables(existingAlignment?.deliverables ?? '');
-    setAlignmentSuccessCriteria(existingAlignment?.successCriteria ?? '');
-    setAlignmentConstraints(existingAlignment?.constraints ?? '');
-    setInviteeName(existingAlignment?.invitee?.name ?? '');
-    setInviteeEmail(existingAlignment?.invitee?.email ?? '');
-    setRequestMessage(existingAlignment?.message ?? '');
-  }, [activeRoleId, project]);
 
   return (
     <div className="dashboard project-workspace project-repo">
@@ -180,9 +197,9 @@ export default function ProjectWorkspace() {
 
               <form
                 className="workspace-role-alignment-form"
-                onSubmit={(e) => {
+                onSubmit={async (e) => {
                   e.preventDefault();
-                  if (!slug || !activeRoleId) return;
+                  if (!slug || !activeRoleId || !activeRole) return;
 
                   const name = inviteeName.trim();
                   const email = inviteeEmail.trim();
@@ -194,54 +211,126 @@ export default function ProjectWorkspace() {
                     setFormError('Invitee email is required.');
                     return;
                   }
+                  if (!dueDate.trim()) {
+                    setFormError('Due date is required.');
+                    return;
+                  }
 
                   const now = new Date().toISOString();
                   const requestId = `req_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
 
-                  updateProject(slug, (p) => {
-                    const roleSpecAlignmentsNext = { ...(p.roleSpecAlignments || {}) };
-                    roleSpecAlignmentsNext[activeRoleId] = {
-                      summary: alignmentSummary,
-                      deliverables: alignmentDeliverables,
-                      successCriteria: alignmentSuccessCriteria,
-                      constraints: alignmentConstraints,
-                      invitee: { name, email },
-                      message: requestMessage,
-                      updatedAt: now,
-                    };
-
-                    const roleRequestsNext = Array.isArray(p.roleRequests) ? [...p.roleRequests] : [];
-                    roleRequestsNext.unshift({
-                      id: requestId,
-                      roleId: activeRoleId,
+                  setFormError('');
+                  setIsSubmitting(true);
+                  try {
+                    const mailResult = await sendRoleInvitationEmail({
+                      toEmail: email,
+                      inviteeName: name,
+                      projectName: project.projectName,
+                      canonicalProductDescription: canonicalDescription,
                       roleLabel: activeRole.label,
-                      invitee: { name, email },
-                      message: requestMessage,
-                      alignment: {
+                      dueDate: dueDate.trim(),
+                      requestId,
+                    });
+
+                    if (!mailResult.ok || !mailResult.data) {
+                      setFormError(
+                        mailResult.error ||
+                          'Could not send invitation. Start the API server (`npm run server`) or check SMTP settings.'
+                      );
+                      setIsSubmitting(false);
+                      return;
+                    }
+
+                    const { vrfToken, vrfUrl, emailSent, simulated, smtpDeliveryFailed } = mailResult.data;
+
+                    updateProject(slug, (p) => {
+                      const roleSpecAlignmentsNext = { ...(p.roleSpecAlignments || {}) };
+                      roleSpecAlignmentsNext[activeRoleId] = {
                         summary: alignmentSummary,
                         deliverables: alignmentDeliverables,
                         successCriteria: alignmentSuccessCriteria,
                         constraints: alignmentConstraints,
-                      },
-                      status: 'sent',
-                      createdAt: now,
+                        invitee: { name, email },
+                        message: requestMessage,
+                        dueDate: dueDate.trim(),
+                        vrfToken,
+                        vrfUrl,
+                        emailSent,
+                        emailSimulated: simulated,
+                        smtpDeliveryFailed,
+                        updatedAt: now,
+                      };
+
+                      const roleRequestsNext = Array.isArray(p.roleRequests) ? [...p.roleRequests] : [];
+                      roleRequestsNext.unshift({
+                        id: requestId,
+                        roleId: activeRoleId,
+                        roleLabel: activeRole.label,
+                        invitee: { name, email },
+                        message: requestMessage,
+                        dueDate: dueDate.trim(),
+                        vrfToken,
+                        vrfUrl,
+                        emailSent,
+                        emailSimulated: simulated,
+                        smtpDeliveryFailed,
+                        alignment: {
+                          summary: alignmentSummary,
+                          deliverables: alignmentDeliverables,
+                          successCriteria: alignmentSuccessCriteria,
+                          constraints: alignmentConstraints,
+                        },
+                        status: 'sent',
+                        createdAt: now,
+                      });
+
+                      return {
+                        ...p,
+                        roleSpecAlignments: roleSpecAlignmentsNext,
+                        roleRequests: roleRequestsNext,
+                      };
                     });
 
-                    return {
-                      ...p,
-                      roleSpecAlignments: roleSpecAlignmentsNext,
-                      roleRequests: roleRequestsNext,
-                    };
-                  });
-
-                  setFormError('');
-                  setRequestSent({
-                    id: requestId,
-                    invitee: { name, email },
-                    roleLabel: activeRole.label,
-                  });
+                    setRequestSent({
+                      id: requestId,
+                      invitee: { name, email },
+                      roleLabel: activeRole.label,
+                      vrfUrl,
+                      emailSent,
+                      simulated,
+                      smtpDeliveryFailed,
+                    });
+                  } catch {
+                    setFormError(
+                      'Network error. Is the API server running? Use `npm run server` in a separate terminal.'
+                    );
+                  } finally {
+                    setIsSubmitting(false);
+                  }
                 }}
               >
+                <div className="form-group workspace-canonical-product">
+                  <label htmlFor="canonical-product-desc">Canonical product description (read-only)</label>
+                  <textarea
+                    id="canonical-product-desc"
+                    readOnly
+                    value={canonicalDescription || '—'}
+                    rows={4}
+                    className="workspace-canonical-readonly"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="role-due-date">Due date</label>
+                  <input
+                    id="role-due-date"
+                    type="date"
+                    value={dueDate}
+                    onChange={(e) => setDueDate(e.target.value)}
+                    required
+                  />
+                </div>
+
                 <div className="form-group">
                   <label htmlFor="alignment-summary">Alignment summary</label>
                   <textarea
@@ -327,19 +416,39 @@ export default function ProjectWorkspace() {
                 )}
 
                 <div className="workspace-role-alignment-actions">
-                  <button type="submit" className="btn btn-primary">
-                    Convert to request & send
+                  <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
+                    {isSubmitting ? 'Sending…' : 'Convert to request & send'}
                   </button>
                 </div>
               </form>
 
               {requestSent && (
                 <div className="workspace-role-request-sent">
-                  <p className="workspace-role-request-sent-title">Request sent</p>
+                  <p className="workspace-role-request-sent-title">Request recorded</p>
                   <p className="workspace-role-request-sent-desc">
-                    Sent to <strong>{requestSent.invitee.name}</strong> (
-                    {requestSent.invitee.email}) for role{' '}
-                    <strong>{requestSent.roleLabel}</strong>.
+                    {requestSent.smtpDeliveryFailed ? (
+                      <>
+                        <strong>Email could not be delivered</strong> (SMTP error — check <code>.env</code> and API
+                        terminal). Share the VRF link below with the invitee manually.{' '}
+                      </>
+                    ) : requestSent.simulated ? (
+                      <>
+                        SMTP not configured — invitation was <strong>simulated</strong> (see API terminal).{' '}
+                      </>
+                    ) : requestSent.emailSent ? (
+                      <>
+                        Email sent to <strong>{requestSent.invitee.name}</strong> ({requestSent.invitee.email}) for role{' '}
+                        <strong>{requestSent.roleLabel}</strong>.{' '}
+                      </>
+                    ) : (
+                      <>
+                        Saved for <strong>{requestSent.invitee.email}</strong> — role <strong>{requestSent.roleLabel}</strong>.{' '}
+                      </>
+                    )}
+                    VRF link:{' '}
+                    <a href={requestSent.vrfUrl} className="workspace-vrf-link" target="_blank" rel="noreferrer">
+                      Open verification link
+                    </a>
                   </p>
                 </div>
               )}
@@ -364,8 +473,9 @@ export default function ProjectWorkspace() {
                       <tr>
                         <th>Role</th>
                         <th>Invitee</th>
+                        <th>Due</th>
                         <th>Status</th>
-                        <th>Updated</th>
+                        <th>Sent</th>
                       </tr>
                     </thead>
                     <tbody className="dashboard-table-body">
@@ -373,6 +483,7 @@ export default function ProjectWorkspace() {
                         <tr key={r.id} className="dashboard-table-row">
                           <td>{r.roleLabel}</td>
                           <td>{r.invitee?.name || '—'}</td>
+                          <td>{r.dueDate || '—'}</td>
                           <td>{r.status}</td>
                           <td>{new Date(r.createdAt).toLocaleString()}</td>
                         </tr>

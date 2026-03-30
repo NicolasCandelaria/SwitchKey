@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <defs>
+    <linearGradient id="sk-favicon-shade" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4f46e5" stop-opacity="1" />
+      <stop offset="100%" stop-color="#4f46e5" stop-opacity="0.65" />
+    </linearGradient>
+    <filter id="sk-favicon-shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="1" stdDeviation="0.6" flood-color="#4f46e5" flood-opacity="0.3" />
+    </filter>
+  </defs>
+  <text
+    x="4"
+    y="22"
+    fill="#4f46e5"
+    fill-opacity="0.22"
+    filter="url(#sk-favicon-shadow)"
+    font-family="system-ui, -apple-system, 'Segoe UI', sans-serif"
+    font-size="18"
+    font-weight="800"
+    letter-spacing="-0.03em"
+  >
+    SK
+  </text>
+  <text
+    x="4"
+    y="22"
+    fill="url(#sk-favicon-shade)"
+    font-family="system-ui, -apple-system, 'Segoe UI', sans-serif"
+    font-size="18"
+    font-weight="800"
+    letter-spacing="-0.03em"
+  >
+    SK
+  </text>
+</svg>

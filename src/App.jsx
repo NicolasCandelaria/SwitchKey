@@ -28,6 +28,7 @@ import CreateProjectShell from './components/CreateProjectShell';
 import CreateProjectBasics from './pages/CreateProject/CreateProjectBasics';
 import CreateProjectPathways from './pages/CreateProject/CreateProjectPathways';
 import CreateProjectSpecConfirm from './pages/CreateProject/CreateProjectSpecConfirm';
+import InviteVRF from './pages/InviteVRF';
 
 export default function App() {
   return (
@@ -44,6 +45,7 @@ export default function App() {
           <Route path="sign-up/terms" element={<Terms />} />
           <Route path="sign-up/success" element={<SignUpSuccess />} />
           <Route path="privacy" element={<Privacy />} />
+          <Route path="invite/vrf" element={<InviteVRF />} />
         </Route>
         <Route
           path="dashboard"
